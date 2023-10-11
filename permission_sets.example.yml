@@ -1,0 +1,32 @@
+---
+
+# General notes:
+#   - Do not specify empty strings, remove the field instead.
+
+permission_sets:
+  administrators: # Permission set's name (max lenght: 32 characters)
+    arn: "arn:aws:sso:::permissionSet/XXXXXXXXXXXXXXXXXXXXXXXXXYYYYYYYYYYYYYYYYY" # This field will be automatically created with the permission set if it does not exist. REMOVE THIS FIELD WHEN YOU DEFINE A NEW PERMISSION SET, IT WILL BE AUTOMATICALLY BE ADDED BY THE SCRIPT.
+    description: "Give Administrator access on all Besedo AWS accounts." # Optional.
+    session_duration: "1h30m15s"  # Optional. Format: "12h59m59s". Minimum is 1h and maximum is 12h.
+    relay_state: "https://eu-west-1.console.aws.amazon.com/ec2/home?region=eu-west-1#" # Optional. The URL/Service to redirect the user when accessing the AWS Console.
+    policies:
+      aws_managed:
+        - "AdministratorAccess"
+      customer_managed:
+        - "customer_managed_permission001"
+      permissions_boundary: # Currently not supported.
+        aws_managed:
+          - ""
+        customer_managed:
+          - ""
+    tags: # Optional
+      - tag1: value1
+
+
+  read_only: # Reminder: because it is a new permission set, we must NOT define any "arn", it will be added by the script right after creating it.
+    session_duration: "12h"
+    policies:
+      aws_managed:
+        - "ReadOnlyAccess"
+
+...

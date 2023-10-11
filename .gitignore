@@ -1,0 +1,5 @@
+# Ignore these in this directory
+venv*
+
+# Except this file
+!.gitignore

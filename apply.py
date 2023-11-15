@@ -1154,7 +1154,7 @@ class Main():
 
             # ARN is not defined
             if not "arn" in permission_set_details.keys() or \
-               permission_set_details["arn"] == "(know after apply)":
+               permission_set_details["arn"] == "(known after apply)":
                 # Create permission set
                 changelogs.append(f"  + {permission_set_name}")
 
@@ -1166,18 +1166,18 @@ class Main():
                         permission_set_details["arn"] = permission_set_arn
                         self.__dump_permission_set_config_to_file(file_path=PERMISSION_SETS_CONFIG_FILE)
                 else:
-                    permission_set_details["arn"] = "(know after apply)"
+                    permission_set_details["arn"] = "(known after apply)"
                     
             
             # ARN is defined and at least one permission set in config has the same ARN
             if permission_set_details["arn"] in config_permission_set_arns and \
-               permission_set_details["arn"] != "(know after apply)":
+               permission_set_details["arn"] != "(known after apply)":
                 warninglogs.append(f"Permission set [{permission_set_name}]'s ARN is already assigned to "
                                    "another permission set in configuration file. Skipping.")
             
             # ARN is defined and in list, update the permission set
             elif permission_set_details["arn"] in existing_permission_set_arns and \
-                 permission_set_details["arn"] != "(know after apply)":
+                 permission_set_details["arn"] != "(known after apply)":
                 tmp_changelogs, permission_set_tags_changes = self.__check_permission_set_diff(config_permission_set=permission_set_details)
                 if len(tmp_changelogs) != 0:
                     changelogs.append(f"  ~ {permission_set_name}")
@@ -1189,7 +1189,7 @@ class Main():
             # ARN is defined and not in list, print a warning and skip
             else:
                 # This condition is only accessed when apply=False
-                if permission_set_details["arn"] == "(know after apply)":
+                if permission_set_details["arn"] == "(known after apply)":
                     changelogs.append(f"    + ARN:                      {permission_set_details['arn']}")
                     for field, value in permission_set_details.items():
                         if (field == "description"):      changelogs.append(f"    + Description:              '{value}'")
